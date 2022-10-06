@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "cm-catalogue-mobile",
+    "slug": "cm-catalogue-mobile",
+    "owner": "tackboon",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7a214091-c688-4c94-a09d-86986d2747b1"
+      }
+    },
+    "android": {
+      "package": "com.cmcataloguemobile"
+    }
+  }
+}

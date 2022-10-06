@@ -1,0 +1,103 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: "CM Catalogue - Mobile API"
+  description: "A service for mobile service to download data."
+servers:
+  - url: http://{hostname}/api/v1/mobile
+    variables:
+      hostname:
+        default: localhost:8080
+security:
+  - bearerAuth: []
+paths:
+  /getMobileAPIInfo:
+    get:
+      operationId: getMobileAPIInfo
+      summary: "Retrieve mobile API info"
+      tags:
+        - mobile
+      responses:
+        "200":
+          description: "Return mobile api info."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MobileAPIInfo"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        default:
+          $ref: "#/components/responses/Unexpected"
+
+  /download/{info_type}:
+    get:
+      operationId: downloadData
+      summary: "Export file for mobile to launch in offline mode"
+      tags:
+        - mobile
+      parameters:
+        - in: path
+          name: info_type
+          required: true
+          schema:
+            type: string
+            enum: ["db", "file"]
+      responses:
+        "200":
+          description: "Return zip file."
+          content:
+            application/zip:
+              schema:
+                $ref: "#/components/schemas/SchemaFile"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        default:
+          $ref: "#/components/responses/Unexpected"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+    Unexpected:
+      description: "Unexpected error."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelError"
+
+  schemas:
+    MobileAPIInfo:
+      type: object
+      required: [dbVersion, fileVersion]
+      properties:
+        dbVersion:
+          type: integer
+          example: 1
+        fileVersion:
+          type: integer
+          example: 2
+
+    SchemaFile:
+      type: object
+      required: [file]
+      properties:
+        file:
+          type: string
+          format: binary
+
+    ModelError:
+      type: object
+      required:
+        - slug
+        - message
+      properties:
+        slug:
+          type: string
+        message:
+          type: string
