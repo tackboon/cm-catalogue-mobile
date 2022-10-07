@@ -1,4 +1,4 @@
-package com.cmcataloguemobile.newarchitecture;
+package com.tackboon.cmcataloguemobile.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -20,9 +20,9 @@ import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.cmcataloguemobile.BuildConfig;
-import com.cmcataloguemobile.newarchitecture.components.MainComponentsRegistry;
-import com.cmcataloguemobile.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.tackboon.cmcataloguemobile.BuildConfig;
+import com.tackboon.cmcataloguemobile.newarchitecture.components.MainComponentsRegistry;
+import com.tackboon.cmcataloguemobile.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

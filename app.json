@@ -16,11 +16,11 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "7a214091-c688-4c94-a09d-86986d2747b1"
+        "projectId": "6bcaf678-d321-4f5c-bd71-5e16a289586c"
       }
     },
     "android": {
-      "package": "com.cmcataloguemobile"
+      "package": "com.tackboon.cmcataloguemobile"
     }
   }
 }

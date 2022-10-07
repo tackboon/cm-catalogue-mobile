@@ -1,4 +1,4 @@
-package com.cmcataloguemobile.newarchitecture.modules;
+package com.tackboon.cmcataloguemobile.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

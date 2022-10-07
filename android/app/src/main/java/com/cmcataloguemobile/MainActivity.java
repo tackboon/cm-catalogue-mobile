@@ -1,4 +1,4 @@
-package com.cmcataloguemobile;
+package com.tackboon.cmcataloguemobile;
 
 import android.os.Build;
 import android.os.Bundle;
