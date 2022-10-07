@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginVertical: 16,
     marginHorizontal: deviceWidth >= 576 ? (deviceWidth - 540) / 4 : 0,
+    backgroundColor: "#fff",
   },
   image: {
     width: deviceWidth >= 576 ? 270 : 320,

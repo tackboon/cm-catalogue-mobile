@@ -25,7 +25,9 @@ const CategoryItem: FC<CategoryItemProps> = ({ category }) => {
   return (
     <Pressable style={styles.container} onPress={handlePress}>
       <CustomImage fileID={category.file_id} style={styles.image} />
-      <Text style={styles.title}>{category.name}</Text>
+      <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
+        {category.name}
+      </Text>
     </Pressable>
   );
 };
