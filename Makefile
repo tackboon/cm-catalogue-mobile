@@ -13,3 +13,7 @@ openapi:
 		-i /local/api/openapi/mobile.yml \
 		-g typescript-axios \
 		-o /local/src/openapi/mobile
+
+.PHONY: build
+build:
+	@npx eas-cli build --platform android --profile preview

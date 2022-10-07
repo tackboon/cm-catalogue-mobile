@@ -26,7 +26,7 @@ const CustomImage: FC<CustomImageProps> = ({ fileID, style }) => {
     <Image
       style={style}
       source={image}
-      resizeMode="cover"
+      resizeMode="contain"
       onError={() => setImage(NoImage)}
     />
   );
