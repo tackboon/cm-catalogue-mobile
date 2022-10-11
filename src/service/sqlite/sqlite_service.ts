@@ -71,21 +71,6 @@ class SQLite {
       }
     }
   }
-
-  async selectData() {
-    this.db.transaction(
-      (tx) => {
-        tx.executeSql("SELECT * FROM categories", [], (_, res) => {
-          for (const data of res.rows._array) {
-            console.log(data);
-          }
-        });
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
 }
 
 export const sqlite = new SQLite();
@@ -96,58 +81,39 @@ const insertTable = (
   tableName: string
 ) => {
   const rows = data.split("\n");
+  let columnSize = 0;
   let truncateStmt = "";
   let insertStmt = "";
-  const dataset = [];
 
   switch (tableName) {
     case "categories":
       truncateStmt = `DELETE FROM categories;`;
       insertStmt = `
-        INSERT INTO categories (id, name, file_id, created_at, updated_at) VALUES 
+        INSERT INTO categories (id, name, file_id, created_at, updated_at) 
+        VALUES (?,?,?,?,?);
       `;
-      rows.map((row) => {
-        const d = row.split("|");
-        if (d.length === 5) {
-          dataset.push(...d);
-          insertStmt += "(?,?,?,?,?),";
-        }
-      });
+      columnSize = 5;
       break;
     case "products":
       truncateStmt = `DELETE FROM products;`;
       insertStmt = `
-        INSERT INTO products (id, category_id, name, description, price, status, 
-          position, created_at, updated_at) VALUES 
+        INSERT INTO products (id, category_id, name, description, price, status,
+          position, created_at, updated_at) 
+          VALUES (?,?,?,?,?,?,?,?,?);
       `;
-      rows.map((row) => {
-        const d = row.split("|");
-        if (d.length === 9) {
-          dataset.push(...d);
-          insertStmt += "(?,?,?,?,?,?,?,?,?),";
-        }
-      });
+      columnSize = 9;
       break;
     case "products_catalogue_files":
       truncateStmt = `DELETE FROM products_catalogue_files;`;
       insertStmt = `
-        INSERT INTO products_catalogue_files (product_id, file_id, is_preview) VALUES 
+        INSERT INTO products_catalogue_files (product_id, file_id, is_preview) 
+        VALUES (?,?,?);
       `;
-      rows.map((row) => {
-        const d = row.split("|");
-        if (d.length === 3) {
-          dataset.push(...d);
-          insertStmt += "(?,?,?),";
-        }
-        return null;
-      });
+      columnSize = 3;
       break;
     default:
-      return
+      return;
   }
-
-  // remove the last comma
-  insertStmt = insertStmt.slice(0, -1);
 
   return new Promise((resolve, reject) => {
     db.transaction(
@@ -156,9 +122,15 @@ const insertTable = (
         tx.executeSql(truncateStmt);
 
         // insert data
-        if (rows.length) {
-          tx.executeSql(insertStmt, dataset);
-        }
+        rows.forEach((row) => {
+          const d = row.split("|");
+          const data: string[] = [];
+
+          if (d.length === columnSize) {
+            data.push(...d);
+            tx.executeSql(insertStmt, data);
+          }
+        });
       },
       (error) => {
         reject(error);
