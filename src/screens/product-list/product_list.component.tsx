@@ -3,6 +3,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { Dimensions, FlatList, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Picker } from "@react-native-picker/picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { StackParam } from "../../Main";
 import { AppDispatch } from "../../store/store";
@@ -32,6 +33,19 @@ const ProductListScreen = () => {
     );
   }, [selectedStatus, filter]);
 
+  const handleStatusChange = async (value: ProductStatus) => {
+    setSelectedStatus(value);
+    await AsyncStorage.setItem("product_status", value);
+  };
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      const status = await AsyncStorage.getItem("product_status");
+      setSelectedStatus(status);
+    };
+    fetchStatus();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.optionWrapper}>
@@ -45,7 +59,7 @@ const ProductListScreen = () => {
             mode="dropdown"
             style={styles.dropdown}
             selectedValue={selectedStatus}
-            onValueChange={(value: ProductStatus) => setSelectedStatus(value)}
+            onValueChange={(value: ProductStatus) => handleStatusChange(value)}
           >
             <Picker.Item label="All Products" value="all" />
             <Picker.Item label="In Stock - 有库存" value="in_stock" />
