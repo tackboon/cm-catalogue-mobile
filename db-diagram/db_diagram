@@ -1,0 +1,36 @@
+Table categories {
+  id serial [pk]
+  name varchar [unique]
+  file_id varchar [ref: > catalogue_files.id]
+  created_at datetime
+  updated_at datetime
+}
+
+Table products {
+  id serial [pk]
+  category_id integer [ref: > categories.id]
+  name varchar
+  description varchar [null]
+  price numeric
+  status varchar
+  position numeric
+  created_at datetime
+  updated_at datetime
+}
+
+Table catalogue_files {
+  id varchar [pk]
+  path varchar
+  created_at datetime
+  updated_at datetime
+}
+
+Table products_catalogue_files {
+  product_id integer [ref: > products.id]
+  file_id varchar [ref: > catalogue_files.id]
+  is_preview integer [default: 0]
+  
+  Indexes {
+    (product_id, file_id) [pk]
+  }
+}

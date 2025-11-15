@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "cm-catalogue-mobile",
+    "slug": "cm-catalogue-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.tackboon.cmcataloguemobile"
+    },
+    "plugins": [
+      "expo-sqlite"
+    ]
+  }
+}

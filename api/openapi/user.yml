@@ -1,0 +1,73 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: "CM Catalogue - User API"
+  description: "A service for managing user."
+servers:
+  - url: http://{hostname}/api/v1/users
+    variables:
+      hostname:
+        default: localhost:8080
+security:
+  - bearerAuth: []
+paths:
+  /getCurrentUser:
+    get:
+      operationId: getCurrentUser
+      summary: "Retrieve user info"
+      tags:
+        - user
+      responses:
+        "200":
+          description: "Return user info."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        default:
+          $ref: "#/components/responses/Unexpected"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+    Unexpected:
+      description: "Unexpected error."
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelError"
+
+  schemas:
+    User:
+      type: object
+      required: [email, display_name, role]
+      properties:
+        email: 
+          type: string
+          example: "tack@example.com"
+        display_name: 
+          type: string
+          example: "Tack"
+        role: 
+          type: string
+          example: "admin"
+
+    ModelError:
+      type: object
+      required:
+        - slug
+        - message
+      properties:
+        slug:
+          type: string
+        message:
+          type: string
